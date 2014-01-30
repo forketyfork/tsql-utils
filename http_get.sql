@@ -18,9 +18,9 @@ if object_id(N'dbo.http_get', N'FN') is not null
 go
 
 create function dbo.http_get
-  (@url varchar(max),       -- http url to get
-  @login varchar(max),      -- user login for Basic auth
-  @password varchar(max))   -- user password for Basic auth
+  (@url varchar(1024),     -- http url to get
+  @login varchar(64),      -- user login for Basic auth
+  @password varchar(64))   -- user password for Basic auth
   returns varchar(8000)
 as
 begin
@@ -31,7 +31,7 @@ declare @obj int,               -- an ServerXMLHttp handle
     @description varchar(1024), -- error description
     @err_message varchar(2048), -- error message
     @result varchar(8000),      -- request result
-    @authorization varchar(255);-- Authorization HTTP header (base64-encoded login and password)
+    @authorization varchar(256);-- Authorization HTTP header (base64-encoded login and password)
 
 -- creating Authorization header from login and password
 set @authorization = 'Basic ' + (
